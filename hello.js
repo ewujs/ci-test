@@ -8,4 +8,4 @@ const server = http.createServer((req, res) => {
     res.end('Hello Heroku!\n');
 });
 
-server.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}`));
+server.listen(port, () => console.log(`Listening on ${port}`));
