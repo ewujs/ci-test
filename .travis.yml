@@ -22,3 +22,5 @@ jobs:
         on:
           repo: ewujs/ci-test
           branch: master
+      after_deploy:
+        - testcafe chrome index-test.js
