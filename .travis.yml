@@ -16,15 +16,15 @@ install:
   - npm install
 jobs:
   include:
-    - stage: test
+    - script: jest ./test/unit.test.js
       name: "Unit Testing"
-      script: jest ./test/unit.test.js
     - script: jest ./test/integration.test.js
       name: "Integration Testing"
     - stage: deploy
       name: "Deploy to Heroku"
       if: branch = master
       deploy:
+        script: skip
         skip_cleanup: true
         provider: heroku
         api_key:
