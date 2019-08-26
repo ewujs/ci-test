@@ -1,5 +1,5 @@
 {
-  "name": "heroku-test",
+  "name": "heroku-ci-test",
   "version": "1.0.0",
   "description": "",
   "main": "hello.js",
@@ -20,7 +20,5 @@
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.4.4"
-  }
+  "dependencies": {}
 }
