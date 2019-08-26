@@ -2,15 +2,20 @@ language: node_js
 node_js:
   - 10
   - 9
-  - 8
-  - 7
-install:
-    - npm install
-script:
-    - npm run test
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Unit Tests"
+      script: ./test/unit.test.js
+    - name: "Integration Tests"
+      script: ./test/integration.test.js
+install: skip
 deploy:
+  skip_cleanup: true
   provider: heroku
   api_key:
     secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
   app: ewutest
-  on: ewujs/ci-test
+  on:
+    repo: ewujs/ci-test
+    branch: master
