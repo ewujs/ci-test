@@ -34,9 +34,8 @@ jobs:
           repo: ewujs/ci-test
           branch: master
       after_deploy:
-        before_script:
-          - "export DISPLAY=:99.0"
-          - "sh -e /etc/init.d/xvfb start"
-          - sleep 3
-          - fluxbox >/dev/null 2>&1 &
-        script: testcafe chrome index-test.js
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        - sleep 3
+        - fluxbox >/dev/null 2>&1 &
+        - testcafe chrome index-test.js
