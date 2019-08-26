@@ -1,11 +1,12 @@
 language: node_js
+install: 
+  - npm install
 jobs:
   include:
     - stage: test
       node_js:
         - 10
       name: "Unit Testing"
-      install: npm install
       script: jest ./test/unit.test.js
     - script: jest ./test/integration.test.js
       name: "Integration Testing"
