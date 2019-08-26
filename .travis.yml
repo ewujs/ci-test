@@ -6,9 +6,9 @@ jobs:
   include:
     - stage: "Tests"
       name: "Unit Tests"
-      script: ./test/unit.test.js
+      script: jest ./test/unit.test.js
     - name: "Integration Tests"
-      script: ./test/integration.test.js
+      script: jest ./test/integration.test.js
 install: npm install
 deploy:
   skip_cleanup: true
