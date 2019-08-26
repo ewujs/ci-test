@@ -9,7 +9,7 @@ jobs:
       script: ./test/unit.test.js
     - name: "Integration Tests"
       script: ./test/integration.test.js
-install: skip
+install: npm install
 deploy:
   skip_cleanup: true
   provider: heroku
