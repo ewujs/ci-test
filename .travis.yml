@@ -1,21 +1,23 @@
 language: node_js
-node_js:
-  - 10
-  - 9
 jobs:
   include:
-    - stage: "Tests"
-      name: "Unit Tests"
+    - stage: test
+      node_js:
+        - 10
+      name: "Unit Testing"
+      install: npm install
       script: jest ./test/unit.test.js
-    - name: "Integration Tests"
-      script: jest ./test/integration.test.js
-install: npm install
-deploy:
-  skip_cleanup: true
-  provider: heroku
-  api_key:
-    secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
-  app: ewutest
-  on:
-    repo: ewujs/ci-test
-    branch: master
+    - script: jest ./test/integration.test.js
+      name: "Integration Testing"
+    - stage: deploy
+      name: "Deploy to Heroku"
+      if: branch = master
+      deploy:
+        skip_cleanup: true
+        provider: heroku
+        api_key:
+          secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
+        app: ewutest
+        on:
+          repo: ewujs/ci-test
+          branch: master
