@@ -1,17 +1,24 @@
 language: node_js
 node_js:
   - 10
-  - 9
-  - 8
-  - 7
-install:
-    - npm install
-script:
-    - npm run test
-if: branch = master
-deploy:
-  provider: heroku
-  api_key:
-    secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
-  app: ewutest
-  on: ewujs/ci-test
+install: 
+  - npm install
+jobs:
+  include:
+    - stage: test
+      name: "Unit Testing"
+      script: jest ./test/unit.test.js
+    - script: jest ./test/integration.test.js
+      name: "Integration Testing"
+    - stage: deploy
+      name: "Deploy to Heroku"
+      if: branch = master
+      deploy:
+        skip_cleanup: true
+        provider: heroku
+        api_key:
+          secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
+        app: ewutest
+        on:
+          repo: ewujs/ci-test
+          branch: master
