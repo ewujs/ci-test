@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 10
+  - node
 before_install:
   - stty cols 80
 dist: trusty
@@ -12,17 +12,20 @@ addons:
      - google-chrome
     packages:
      - google-chrome-stable fluxbox
-install: 
-  - npm install
+cache: npm
+script: skip
 jobs:
   include:
-    - script: jest ./test/unit.test.js
+    - stage: test
+      if: type = push AND branch = test-branch
       name: "Unit Testing"
+      script: jest ./test/unit.test.js
     - script: jest ./test/integration.test.js
+      if: type = push AND branch = test-branch
       name: "Integration Testing"
     - stage: deploy
+      if: type = pull_request AND branch = development
       name: "Deploy to Heroku"
-      if: branch = master
       deploy:
         script: skip
         skip_cleanup: true
@@ -32,7 +35,7 @@ jobs:
         app: ewutest
         on:
           repo: ewujs/ci-test
-          branch: master
+          branch: development
       after_deploy:
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
