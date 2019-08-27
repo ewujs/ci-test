@@ -20,7 +20,8 @@ jobs:
       if: type = pull_request AND branch = development
       name: "Unit Testing"
       script: jest ./test/unit.test.js
-    - script: jest ./test/integration.test.js
+    - stage: test
+      script: jest ./test/integration.test.js
       if: type = pull_request AND branch = development
       name: "Integration Testing"
     - stage: deploy
