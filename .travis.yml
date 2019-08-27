@@ -21,6 +21,7 @@ jobs:
       name: "Unit Testing"
       script: jest ./test/unit.test.js
     - script: jest ./test/integration.test.js
+      if: type = push AND branch = test-branch
       name: "Integration Testing"
     - stage: deploy
       if: type = pull_request AND branch = development
