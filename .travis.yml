@@ -22,6 +22,7 @@ jobs:
       name: "Integration Testing"
     - stage: deploy
       name: "Deploy to Heroku"
+      if: type = pull_request AND branch = development
       deploy:
         script: skip
         skip_cleanup: true
