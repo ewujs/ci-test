@@ -19,9 +19,8 @@ jobs:
     - stage: test
       name: "Unit Testing"
       script: jest ./test/unit.test.js
-    - stage: test
+    - script: jest ./test/integration.test.js
       name: "Integration Testing"
-      script: jest ./test/integration.test.js
     - stage: deploy
       name: "Deploy to Heroku"
       if: type = pull_request AND branch = development
