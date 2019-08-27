@@ -17,14 +17,14 @@ script: skip
 jobs:
   include:
     - stage: test
-      if: type = push AND branch = test-branch
+      if: type = pull_request AND branch = development
       name: "Unit Testing"
       script: jest ./test/unit.test.js
     - script: jest ./test/integration.test.js
-      if: type = push AND branch = test-branch
+      if: type = pull_request AND branch = development
       name: "Integration Testing"
     - stage: deploy
-      if: type = pull_request AND branch = development
+      if: type = push AND branch = development
       name: "Deploy to Heroku"
       deploy:
         script: skip
