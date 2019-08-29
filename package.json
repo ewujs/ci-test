@@ -5,7 +5,9 @@
   "main": "hello.js",
   "scripts": {
     "test": "jest",
-    "start": "node hello.js"
+    "start": "node ./server.js",
+    "webpack": "webpack",
+    "build": "npm run webpack -- --mode production"
   },
   "keywords": [],
   "author": "",
