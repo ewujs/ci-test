@@ -27,7 +27,8 @@ jobs:
     - stage: deploy to staging
       if: type = push AND branch = development
       name: "Deploy to Heroku"
-      script: npm build
+      install: skip
+      script: skip
       deploy:
         skip_cleanup: true
         provider: heroku
@@ -47,7 +48,8 @@ jobs:
     - stage: deploy to production
       if: type = push AND branch = master
       name: "Deploy to Heroku"
-      script: npm build
+      install: skip
+      script: skip
       deploy:
         skip_cleanup: true
         provider: heroku
