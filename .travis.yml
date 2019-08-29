@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 10
+  - node
 before_install:
   - stty cols 80
 dist: trusty
@@ -12,30 +12,55 @@ addons:
      - google-chrome
     packages:
      - google-chrome-stable fluxbox
-install: 
-  - npm install
+cache: npm
+script: skip
 jobs:
   include:
-    - script: jest ./test/unit.test.js
+    - stage: test
+      if: type = pull_request AND branch = development
       name: "Unit Testing"
-    - script: jest ./test/integration.test.js
+      script: jest ./test/unit.test.js
+    - stage: test
+      script: jest ./test/integration.test.js
+      if: type = pull_request AND branch = development
       name: "Integration Testing"
-    - stage: deploy
+    - stage: deploy to staging
+      if: type = push AND branch = development
       name: "Deploy to Heroku"
-      if: branch = master
+      script: skip
       deploy:
-        script: skip
         skip_cleanup: true
         provider: heroku
         api_key:
           secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
-        app: ewutest
-        on:
-          repo: ewujs/ci-test
-          branch: master
-      after_deploy:
+        app: ci-test-staging
+        on: development
+    - stage: staging test
+      if: type = push AND branch = development
+      name: "End-to-end Testing"
+      before_script:
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         - sleep 3
         - fluxbox >/dev/null 2>&1 &
-        - testcafe chrome index-test.js
+      script: testcafe chrome index-staging-test.js
+    - stage: deploy to production
+      if: type = push AND branch = master
+      name: "Deploy to Heroku"
+      script: skip
+      deploy:
+        skip_cleanup: true
+        provider: heroku
+        api_key:
+          secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
+        app: ci-test-production
+        on: master
+    - stage: production test
+      if: type = push AND branch = master
+      name: "End-to-end Testing"
+      before_script:
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        - sleep 3
+        - fluxbox >/dev/null 2>&1 &
+      script: testcafe chrome index-prod-test.js

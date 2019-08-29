@@ -1,7 +1,7 @@
-import { Selector } from 'testcafe';
+import {Selector} from 'testcafe';
 
 fixture`CI/CD testing`
-  .page`https://ewutest.herokuapp.com/`;
+  .page`https://ci-test-production.herokuapp.com/`;
 
 test('page test', async t => {
   await t
