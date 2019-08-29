@@ -27,7 +27,8 @@ jobs:
     - stage: deploy to staging
       if: type = push AND branch = development
       name: "Deploy to Heroku"
-      script: skip
+      install: skip
+      script: npm build
       deploy:
         skip_cleanup: true
         provider: heroku
@@ -43,11 +44,12 @@ jobs:
         - "sh -e /etc/init.d/xvfb start"
         - sleep 3
         - fluxbox >/dev/null 2>&1 &
-      script: testcafe chrome index-staging-test.js
+      script: testcafe chrome ./test/e2e/index-staging-test.js
     - stage: deploy to production
       if: type = push AND branch = master
       name: "Deploy to Heroku"
-      script: skip
+      install: skip
+      script: npm build
       deploy:
         skip_cleanup: true
         provider: heroku
@@ -63,4 +65,4 @@ jobs:
         - "sh -e /etc/init.d/xvfb start"
         - sleep 3
         - fluxbox >/dev/null 2>&1 &
-      script: testcafe chrome index-prod-test.js
+      script: testcafe chrome ./test/e2e/index-prod-test.js

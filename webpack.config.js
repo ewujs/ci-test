@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './hello.js',
+  entry: './src/index.js',
   output: {
     filename: 'ci-test.js',
     path: path.resolve(__dirname, 'dist')
@@ -19,5 +19,8 @@ module.exports = {
         }
       }
     ]
+  },
+  node: {
+    fs: 'empty'
   }
 };
