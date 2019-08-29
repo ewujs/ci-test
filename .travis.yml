@@ -36,6 +36,7 @@ jobs:
         app: ewutest
         on: development
     - stage: test staging
+      if: type = pull_request AND branch = development
       name: "Staging Testing"
       before_script:
         - "export DISPLAY=:99.0"
