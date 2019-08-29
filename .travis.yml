@@ -24,22 +24,22 @@ jobs:
       script: jest ./test/integration.test.js
       if: type = pull_request AND branch = development
       name: "Integration Testing"
-    - stage: deploy
+    - stage: deploy to staging
       if: type = push AND branch = development
       name: "Deploy to Heroku"
+      script: skip
       deploy:
-        script: skip
         skip_cleanup: true
         provider: heroku
         api_key:
           secure: 99e971fd-ded9-4202-a90a-74217c1b5dbb
         app: ewutest
-        on:
-          repo: ewujs/ci-test
-          branch: development
-      after_deploy:
+        on: development
+    - stage: test staging
+      name: "Staging Testing"
+      before_script:
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         - sleep 3
         - fluxbox >/dev/null 2>&1 &
-        - testcafe chrome index-test.js
+      script: testcafe chrome index-test.js
