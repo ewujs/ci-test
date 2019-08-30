@@ -5,5 +5,5 @@ fixture`CI/CD testing`
 
 test('page test', async t => {
   await t
-    .expect(Selector('#page-title').innerText).eql('Hello, Travis-CI & Heroku!!');
+    .expect(Selector('#page-title').innerText).eql('Hello, Travis-CI & Heroku!');
 });
